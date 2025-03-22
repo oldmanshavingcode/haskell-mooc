@@ -14,8 +14,13 @@ data Tree a = Empty | Node a (Tree a) (Tree a)
 -- the root (top-most node) of the tree. The return value is Maybe a
 -- because the tree might be empty (i.e. just a Empty)
 
+-- 풀이 전략 : 트리가  빈 경우와, 트리가 존재하는 경우를 고려하여 패턴 매칭을 이용한다.
 valAtRoot :: Tree a -> Maybe a
-valAtRoot t = todo
+
+-- 만약 트리가 비어있다면 아무것도 출력하지 않음
+valAtRoot Empty = Nothing
+-- 트리에서 루트 노드를 변수 root에 바인딩하여 사용, 트리의 자식노드는 무시함 
+valAtRoot (Node root _ _) = Just root
 
 ------------------------------------------------------------------------------
 -- Ex 2: compute the size of a tree, that is, the number of Node
@@ -25,8 +30,13 @@ valAtRoot t = todo
 --   treeSize (Node 3 (Node 7 Empty Empty) Empty)  ==>  2
 --   treeSize (Node 3 (Node 7 Empty Empty) (Node 1 Empty Empty))  ==>  3
 
+-- 풀이 전략 : 트리의 부모노드가 빈경우와, 존재하는 경우에 대하여 재귀를 적용한다.
 treeSize :: Tree a -> Int
-treeSize t = todo
+
+-- 만약 트리가 비어있다면 노드 개수는 0
+treeSize Empty          = 0
+-- 트리의 패턴이 이진트리로 부모노드와 자식노드의 패턴과 일치한다면 부모(1) + 자식노드의 트리 노드 합(left + right)
+treeSize (Node _ left right)   = 1 + treeSize left + treeSize right
 
 ------------------------------------------------------------------------------
 -- Ex 3: get the largest value in a tree of positive Ints. The
